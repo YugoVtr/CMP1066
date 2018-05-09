@@ -8,7 +8,8 @@ import (
 type User struct {
 	Id int
     Login string
-    Password string
+	Password string
+	Status bool
 }
 
 func init() {
@@ -17,14 +18,17 @@ func init() {
     orm.RegisterDataBase("default", "sqlite3", "file:models/DbTables-v1.0.0.db")
 }
 
-func GetUser(id int) string{
+func GetUser(id int) User { 
 	o := orm.NewOrm()
-	o.Using("default")
-	user := new(User)
-	user.Id = id;
-	o.Read(user)
+	user := User{Id:id}
+	o.Read(&user)
+	return user
+}
 
-	return user.Login
-	
-
+func GetAllUsers() (int64, []*User) {
+	o := orm.NewOrm()
+	var users []*User
+	var count int64
+	count,_ = o.QueryTable("user").All(&users)
+	return count, users
 }
