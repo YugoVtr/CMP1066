@@ -13,11 +13,11 @@ func (c *UserController) Get() {
 	_, users := models.GetAllUsers()
 
 	c.Data["Users"] = users
-	c.Layout = "Layout/Default/layout.html"
-	c.TplName = "users.html"
+	c.Layout = "layout/default.html"
+	c.TplName = "view/user.html"
 
 	c.LayoutSections = make(map[string]string)
-    c.LayoutSections["HtmlHead"] = "Layout/Default/html_head.html"
-    c.LayoutSections["Scripts"] = "Layout/Default/scripts.html"
+    c.LayoutSections["HtmlHead"] = ""
+    c.LayoutSections["Scripts"] = ""
     c.LayoutSections["Sidebar"] = ""
 }
