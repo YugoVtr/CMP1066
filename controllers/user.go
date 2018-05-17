@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"CMP1066/models"
+	"strconv"
 )
 
 type UserController struct {
@@ -21,5 +22,20 @@ func (c *UserController) Post() {
 	
     userid := models.AddOne(user)
     c.Data["json"] = map[string]interface{}{"User": userid }
+    c.ServeJSON()
+}
+
+func (c *UserController) Delete() {
+	input   := c.Ctx.Input.Param(":id")
+	idUser,_:= strconv.ParseInt(input,10,64)
+	savedId := models.Delete(idUser)
+
+	valid := false
+
+	if savedId != 0 {
+		valid = true
+	} 
+
+    c.Data["json"] = map[string]interface{}{"Success": valid }
     c.ServeJSON()
 }

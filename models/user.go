@@ -48,6 +48,7 @@ func Update(user User) int64 {
 
 func Delete(userId int64) int64{
 	user := User{Id: userId, Status: false}
-	num := Update(user)
+	o := orm.NewOrm()
+	num, _:= o.Update(&user,"Status")
 	return num
 }

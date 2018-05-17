@@ -16,9 +16,14 @@ func (c *MainController) Prepare() {
 	uri := c.Ctx.Input.Data()["RouterPattern"].(string)
 	view := strings.Split(uri,"/")[1]
 
+	if view == "" {
+		view = "index"
+	}
+
 	c.TplName = "view/" + view + ".html"
 	c.LayoutSections = make(map[string]string)
     c.LayoutSections["HtmlHead"] = "html_head/" + view + ".html"
     c.LayoutSections["Scripts"] = "scripts/" + view + ".html"
 	c.LayoutSections["Sidebar"] = "sidebar/" + view + ".html"
+	c.Data["Login"] = "Sair"
 }
