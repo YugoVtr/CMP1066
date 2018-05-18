@@ -25,6 +25,13 @@ func GetUser(id int64) User {
 	return user
 }
 
+func GetUserByLogin(login string) User { 
+	o := orm.NewOrm()
+	user := User{Login:login}
+	o.Read(&user,"Login")
+	return user
+}
+
 func GetAllUsers() (int64, []*User) {
 	o := orm.NewOrm()
 	var users []*User
