@@ -5,10 +5,8 @@ $( document ).ready(function() {
     setValueCheckBox("Status", "true", "false"); 
 }); 
     
-function deleteUser(btn) { 
-    
+function deleteUser(btn) {    
 	var id = $("#" + btn.id).closest("tr").attr("id");
-
 	$.ajax({
 		url: '/user/' + id,
 		type: 'DELETE',
@@ -17,8 +15,6 @@ function deleteUser(btn) {
 			location.href = "/user"
 		}
 	});
-
     return 0;
 }
-
 </script>

@@ -12,7 +12,7 @@ type MainController struct {
 func (c *MainController) Prepare() {
 	c.Layout = "layout/default.html"
 
-	//Custom layout
+    //Custom layout
 	uri := c.Ctx.Input.Data()["RouterPattern"].(string)
 	view := strings.Split(uri,"/")[1]
 
@@ -20,10 +20,10 @@ func (c *MainController) Prepare() {
 		view = "index"
 	}
 
+	//Default view
 	c.TplName = "view/" + view + ".html"
 	c.LayoutSections = make(map[string]string)
     c.LayoutSections["HtmlHead"] = "html_head/" + view + ".html"
     c.LayoutSections["Scripts"] = "scripts/" + view + ".html"
-	c.LayoutSections["Sidebar"] = "sidebar/" + view + ".html"
 	c.Data["Login"] = "Sair"
 }
