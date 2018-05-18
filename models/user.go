@@ -1,61 +1,52 @@
 package models
 
 import (
-    "github.com/astaxie/beego/orm"
-    _ "github.com/mattn/go-sqlite3"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/mattn/go-sqlite3"
+	
 )
 
 type User struct {
 	Id int64			`form:"Id,hidden,<label></label>"`
-    Login string		`form:"Login,text,<label>Usuario</label>"`
-	Password string		`form:"Password,password,<label>Senha</label>"`
-	Status bool			`form:"Status,checkbox,<label>Ativo</label>"`
+    Login string		`orm:"size(64);unique" form:"Login,text,<label>Usuario</label>" valid:"Required"`
+	Password string		`orm:"size(128)" form:"Password,password,<label>Senha</label>" valid:"Required;MinSize(6)"`
+	Status bool			`form:"Status,checkbox,<label>Ativo</label>" valid:"Required"`
 }
 
 func init() {
 	orm.RegisterModel(new(User))
-    orm.RegisterDriver("sqlite3", orm.DRSqlite)
-    orm.RegisterDataBase("default", "sqlite3", "file:models/DbTables-v1.0.0.db")
 }
 
-func GetUser(id int64) User { 
-	o := orm.NewOrm()
-	user := User{Id:id}
-	o.Read(&user)
-	return user
-}
-
-func GetUserByLogin(login string) User { 
-	o := orm.NewOrm()
-	user := User{Login:login}
-	o.Read(&user,"Login")
-	return user
+func (user *User) Read(fields ...string) error {
+	if err := orm.NewOrm().Read(user, fields...); err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetAllUsers() (int64, []*User) {
-	o := orm.NewOrm()
+	var table User
 	var users []*User
 	var count int64
-	count,_ = o.QueryTable("user").All(&users)
+	count,_ = orm.NewOrm().QueryTable(table).All(&users)
 	return count, users
 }
 
-func AddOne(user User) int64 {
-	o := orm.NewOrm()
-	
-	id, _ := o.Insert(&user)
-	return id
+func (user *User) Insert() error {
+	if _, err := orm.NewOrm().Insert(user); err != nil {
+		return err
+	}
+	return nil	
 }
 
-func Update(user User) int64 {
-	o := orm.NewOrm()
-	num, _:= o.Update(&user)
-	return num
+func (user *User) Update(fields ...string) error {
+	if _, err := orm.NewOrm().Update(user, fields...); err != nil {
+		return err
+	}
+	return nil
 }
 
-func Delete(userId int64) int64{
-	user := User{Id: userId, Status: false}
-	o := orm.NewOrm()
-	num, _:= o.Update(&user,"Status")
-	return num
+func (user *User) Delete() error {
+	user.Status = false
+	return user.Update("Status")
 }

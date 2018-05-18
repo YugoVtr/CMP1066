@@ -21,26 +21,28 @@ func (c *UserController) Post() {
 	user := models.User{}
 	c.ParseForm(&user)
 
-	verify := models.GetUserByLogin(user.Login)
-	
-	if verify.Id != 0 { 
+	if user.Read("Login"); user.Id != 0 { 
 		c.Data["json"] = map[string]interface{}{"User": "Username already exists"}
 	} else { 
 		//SHA-256
 		hashSenha := sha256.Sum256([]byte(user.Password))
 		user.Password = string(hashSenha[:])
 		
-		userid := models.AddOne(user)
-		c.Data["json"] = map[string]interface{}{"User": userid }
+		if err := user.Insert(); err != nil {
+			c.Data["json"] = map[string]interface{}{"User": user.Id }
+		} else { 
+			c.Data["json"] = map[string]interface{}{"Error": err }
+		}
 	}
-
     c.ServeJSON()
 }
 
 func (c *UserController) Delete() {
 	input   := c.Ctx.Input.Param(":id")
-	idUser,_:= strconv.ParseInt(input,10,64)
-	var valid bool = (models.Delete(idUser) == 0)
+	user := models.User{}
+	id,_:= strconv.ParseInt(input,10,64)
+	user.Id = id 
+	valid := user.Delete()
 
     c.Data["json"] = map[string]interface{}{"Success": valid }
     c.ServeJSON()
