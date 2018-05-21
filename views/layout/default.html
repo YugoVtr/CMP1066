@@ -7,12 +7,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <!-- Default layout-->
-    <!-- Add icon library -->
-    {{assets_css "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"}}
+    
     <!-- Bootstrap v4.0.0 -->
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap.min.css"}}
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap-grid.min.css"}}
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap-reboot.min.css"}}
+    {{assets_css "/static/css/bootstrap-select-v1.13.0-beta/bootstrap-select.min.css"}}
 
     <!-- Custom Layout-->
     {{.HtmlHead}}
@@ -30,9 +30,12 @@
     </div>
     
     <!-- Default layout-->
+    {{assets_js "/static/js/jquery-v3.3.1/jquery.min.js"}}
+    {{assets_js "/static/js/popper-v1.14.3/popper.min.js"}}
     {{assets_js "/static/js/bootstrap-v4.0.0/bootstrap.min.js"}}
     {{assets_js "/static/js/bootstrap-v4.0.0/bootstrap.bundle.min.js"}}
-    {{assets_js "/static/js/jquery-v3.3.1/jquery.min.js"}}
+    {{assets_js "/static/js/bootstrap-select-v1.13.0-beta/bootstrap-select.min.js"}}
+    {{assets_js "/static/js/bootstrap-select-v1.13.0-beta/defaults-pt_BR.min.js"}}
     {{assets_js "/static/js/geral.js"}}
 
     <!-- Custom Layout-->

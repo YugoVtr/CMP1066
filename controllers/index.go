@@ -5,6 +5,5 @@ type IndexController struct {
 }
 
 func (c *IndexController) Get() {
-	c.Data["Github"] = "Yugovtr"
-	c.Data["Email"] = "vitormirandawork@gmail.com"
+	
 }
