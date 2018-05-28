@@ -18,6 +18,10 @@ func (c *LoginController) Login() {
 
 	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 
+	
+	c.Data["Toolbar"] = false
+	c.Data["Titulo"]  = "Login" 
+
 	if !c.Ctx.Input.IsPost() {
 		return
 	}

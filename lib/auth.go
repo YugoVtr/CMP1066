@@ -8,7 +8,7 @@ import (
 
 func Authenticate(nick string, password string) (user *models.User, err error) {
 	msg := "invalid email or password."
-	user = &models.User{Nick: nick}
+	user = &models.User{Nick: nick,Status: true}
 
 	if err := user.Read("Nick"); err != nil {
 		if err.Error() == "<QuerySeter> no row found" {

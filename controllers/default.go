@@ -49,6 +49,7 @@ func (c *MainController) Prepare() {
 	
 	c.Data["IsLogin"] = c.IsLogin
 	c.Data["Userinfo"] = c.Userinfo
+	c.Data["Toolbar"] = true
 
 	//Default layout
 	c.Layout = "layout/default.html"
