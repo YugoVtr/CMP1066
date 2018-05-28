@@ -8,7 +8,7 @@ import (
 
 type User struct {
 	Id int64			`form:"Id,hidden,<label></label>"`
-    Login string		`orm:"size(64);unique" form:"Login,text,<label>Usuario</label>" valid:"Required"`
+    Nick string			`orm:"size(64);unique" form:"Nick,text,<label>Usuario</label>" valid:"Required"`
 	Password string		`orm:"size(128)" form:"Password,password,<label>Senha</label>" valid:"Required;MinSize(6)"`
 	Status bool			`form:"Status,checkbox,<label>Ativo</label>" valid:"Required"`
 }
@@ -24,12 +24,9 @@ func (user *User) Read(fields ...string) error {
 	return nil
 }
 
-func GetAllUsers() (int64, []*User) {
+func Users() orm.QuerySeter {
 	var table User
-	var users []*User
-	var count int64
-	count,_ = orm.NewOrm().QueryTable(table).All(&users)
-	return count, users
+	return orm.NewOrm().QueryTable(table).OrderBy("Id")
 }
 
 func (user *User) Insert() error {

@@ -2,8 +2,9 @@
     <div>
         <h3> Usuarios </h3>
      </div>
-    <div align="center">
+    <div>
         <form action="user" method="post">
+            {{ .xsrfdata }}
             {{.Form | renderform}}
             <input type="submit" value="submit" />
         </form>
@@ -22,7 +23,7 @@
                 {{range $val := .Users}}
                     <tr id="{{$val.Id}}">
                         <td>{{$val.Id}}</td>
-                        <td>{{$val.Login}}</td>
+                        <td>{{$val.Nick}}</td>
                         <td>
                             {{if $val.Status}}
                                 <span class="badge badge-success">Ativo</span>

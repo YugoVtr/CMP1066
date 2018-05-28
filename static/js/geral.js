@@ -17,3 +17,12 @@ function setValueCheckBox(checkbox_name, value_checked, value_unchecked) {
         }
     });
 }
+
+function getXSRFData() {
+    var token = $("input[name=_xsrf]").val()
+    if(token) {
+        return token;
+    } else {
+        return null; 
+    }
+}

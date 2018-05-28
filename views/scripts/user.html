@@ -7,8 +7,12 @@ $( document ).ready(function() {
     
 function deleteUser(btn) {    
 	var id = $("#" + btn.id).closest("tr").attr("id");
+	var _xsrf = getXSRFData(); 
 	$.ajax({
-		url: '/user/' + id,
+		url: "/user?_xsrf="+_xsrf,
+		data: {
+			Id : id
+		},
 		type: 'DELETE',
 		success: function (response) {
 			alert(response ? "success" : "fail")
