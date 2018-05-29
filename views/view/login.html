@@ -6,10 +6,10 @@
 
     <label for="inputNick" class="sr-only">Nick: </label>
     <input class="form-control" placeholder="Usuário" name="Nick" value="{{index .Params "Login"}}" type="text" required 
-            id="inputNick" />
+            id="inputNick" >
     <label for="inputPassword" class="sr-only">Senha:</label>
     <input class="form-control" placeholder="Senha" name="Password" type="password" value="" required 
-            pattern=".{5,}" title="Password" id="inputPassword"  />
+            pattern=".{5,}" title="Password" id="inputPassword"  >
     <input class="btn btn-lg btn-success" type="submit" value="Login">
     <input class="btn btn-lg btn-info" type="button" value="Novo" 
         onclick='location.href = {{ urlfor "UserController.Signup" }};'>

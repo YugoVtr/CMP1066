@@ -33,4 +33,9 @@ function activateUser(btn) {
 	});
     return 0;
 }
+
+function editUser(btn) { 
+	var id = $("#" + btn).closest("tr").attr("id");
+	location.href = "user?Id=" + id;
+}
 </script>

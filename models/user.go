@@ -10,7 +10,7 @@ type User struct {
 	Id int64			`form:"Id,hidden,<label></label>"`
     Nick string			`orm:"size(64);unique" form:"Nick,text,<label>Usuario</label>" valid:"Required"`
 	Password string		`orm:"size(128)" form:"Password,password,<label>Senha</label>" valid:"Required;MinSize(6)"`
-	Status bool			`form:"Status,hidden,<label display="none"></label>"`
+	Status bool			`form:"Status,hidden,<label display='none'></label>"`
 }
 
 func init() {

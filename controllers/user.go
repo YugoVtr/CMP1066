@@ -4,7 +4,7 @@ import (
 	"CMP1066/models"
 	."CMP1066/lib"		//Para fazer o hash da senha 
 	"html/template"
-	"github.com/astaxie/beego"
+	//"github.com/astaxie/beego"
 )
 
 type UserController struct {
@@ -16,28 +16,33 @@ func (c *UserController) Get() {
 	var users []*models.User
 	models.Users().All(&users)
 
-	c.Data["Form"] = &models.User{Status: true}
+	var user models.User = models.User{}
+	if id, erro := c.GetInt64("Id"); erro == nil {
+		user.Id = id
+		user.Read("Id")
+		user.Password = ""
+	} 
+
+	c.Data["Form"] = &user
 	c.Data["Users"] = users
 }
 
 func (c *UserController) Post() {
+	c.Data["json"] = map[string]interface{}{"User": "Success"}
 	user := models.User{}
 	c.ParseForm(&user)
-	user.Status = true
-	beego.Debug(user)
 
-	if models.Users().Filter("Nick", user.Nick).Exist(){ 
-		c.Data["json"] = map[string]interface{}{"User": "Nick already exists"}
-	} else { 
-		//SHA-256
+	if user.Id != 0 {
 		user.Password = Crypto(user.Password)
-		
-		if err := user.Insert(); err == nil {
-			c.Data["json"] = map[string]interface{}{"User": user.Id }
-		} else { 
-			c.Data["json"] = map[string]interface{}{"Error": err }
-		}
+		user.Update()
+	} else if models.Users().Filter("Nick", user.Nick).Exist() {
+		c.Data["json"] = map[string]interface{}{"User": "Nick already exists"}
+	} else {
+		user.Status = true
+		user.Password = Crypto(user.Password)			
+		user.Insert()
 	}
+	
 	c.SetLogin(&user)
 	c.Redirect(c.URLFor("IndexController.Get"), 303)
 }
