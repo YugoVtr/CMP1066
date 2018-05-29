@@ -47,3 +47,8 @@ func (user *User) Delete() error {
 	user.Status = false
 	return user.Update("Status")
 }
+
+func (user *User) Activate() error {
+	user.Status = true
+	return user.Update("Status")
+}

@@ -4,6 +4,8 @@ import (
 	"github.com/astaxie/beego"
 	"CMP1066/models"
 	"regexp"
+	"os"
+	str "strings"
 )
 
 type Controller int
@@ -56,13 +58,28 @@ func (c *MainController) Prepare() {
 
     //Custom layout
 	url := getControllerURL(c)
+ 
+	//Default VIEW
+	var file string = "view" + url + ".html"
+	base := baseURL() + "/views/"
 
+	if _, err := os.Stat(base + file); err == nil {
+		c.TplName = file
+	}
 
-	//Default view
-	c.TplName = "view" + url + ".html"
 	c.LayoutSections = make(map[string]string)
-    c.LayoutSections["HtmlHead"] = "html_head" + url + ".html"
-    c.LayoutSections["Scripts"] = "scripts" + url + ".html"
+
+	// CSS
+	file = "html_head" + url + ".html"
+	if _, err := os.Stat(base + file); err == nil {
+		c.LayoutSections["HtmlHead"] = file
+	}
+
+	// JS
+	file = "scripts" + url + ".html"
+	if _, err := os.Stat(base + file); err == nil {
+		c.LayoutSections["Scripts"] = file
+	}
 	
 	if app, ok := c.AppController.(NestPreparer); ok {
 		app.NestPrepare()
@@ -116,4 +133,10 @@ func getControllerURL(c *MainController) string {
 	}
 
 	return name
+}
+
+func baseURL() string { 
+	base, _ := os.Getwd() 
+	base = str.Replace(base,"\\","/",-1 )
+	return base
 }

@@ -23,6 +23,8 @@ func (c *UserController) Get() {
 func (c *UserController) Post() {
 	user := models.User{}
 	c.ParseForm(&user)
+	user.Status = true
+	beego.Debug(user)
 
 	if models.Users().Filter("Nick", user.Nick).Exist(){ 
 		c.Data["json"] = map[string]interface{}{"User": "Nick already exists"}
@@ -41,16 +43,32 @@ func (c *UserController) Post() {
 }
 
 func (c *UserController) Delete() {
-	beego.Debug("this is debug")
-
-	if id, error := c.GetInt64("Id"); error == nil {
+	if id, erro := c.GetInt64("Id"); erro == nil {
 		user := models.User{}
 		user.Id = id
 		valid := user.Delete()
 	
 		c.Data["json"] = map[string]interface{}{"Success": valid }
 		c.ServeJSON()
-	} 
+	} else {
+		c.Data["json"] = map[string]interface{}{"Error": erro }
+		c.ServeJSON()
+	}
+}
+
+func (c *UserController) Activate() {
+
+	if id, erro := c.GetInt64("Id"); erro == nil {
+		user := models.User{}
+		user.Id = id
+		valid := user.Activate()
+	
+		c.Data["json"] = map[string]interface{}{"Success": valid }
+		c.ServeJSON()
+	} else {
+		c.Data["json"] = map[string]interface{}{"Error": erro }
+		c.ServeJSON()
+	}
 }
 
 func (c *UserController) Signup() {

@@ -1,24 +1,34 @@
 <script>
 
-$("input[name=Nick],input[name=Password]").toggleClass("form-control");
-
 $( document ).ready(function() {
-    setCheckedCheckBox("Status"); 
-    setValueCheckBox("Status", "true", "false"); 
+	$("input[name=Nick],input[name=Password]").toggleClass("form-control");
 }); 
     
 function deleteUser(btn) {    
-	var id = $("#" + btn.id).closest("tr").attr("id");
+	var id = $("#" + btn).closest("tr").attr("id");
 	var _xsrf = getXSRFData(); 
 	$.ajax({
-		url: "/user?_xsrf="+_xsrf,
-		data: {
-			Id : id
-		},
+		url: "/user?_xsrf=" + _xsrf + "&Id=" + id,
 		type: 'DELETE',
 		success: function (response) {
+			console.log(response)
 			alert(response ? "success" : "fail")
-			location.href = "/user"
+			location.reload();
+		}
+	});
+    return 0;
+}
+
+function activateUser(btn) {    
+	var id = $("#" + btn).closest("tr").attr("id");
+	var _xsrf = getXSRFData(); 
+	$.ajax({
+		url: "/user/activate?_xsrf=" + _xsrf + "&Id=" + id,
+		type: 'POST',
+		success: function (response) {
+			console.log(response)
+			alert(response ? "success" : "fail")
+			location.reload();
 		}
 	});
     return 0;
