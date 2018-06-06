@@ -29,11 +29,11 @@
                         </td>
                         <td>
                             {{if not $val.Status}}
-                                <button id="btn-excluir-{{$val.Id}}" class="btn btn-success" onclick="activateUser(this.id)"> Ativar </button>
+                                <button id="btn-excluir-{{$val.Id}}" class="btn btn-success w20" onclick="activateUser(this.id)"> Ativar </button>
                             {{else}}
-                                <button id="btn-excluir-{{$val.Id}}" class="btn btn-danger" onclick="deleteUser(this.id)"> Excluir </button>
+                                <button id="btn-excluir-{{$val.Id}}" class="btn btn-danger w20" onclick="deleteUser(this.id)"> Excluir </button>
                             {{end}}
-                            <button id="btn-editar-{{$val.Id}}" class="btn btn-info" onclick="editUser(this.id)"> Editar </button>
+                            <button id="btn-editar-{{$val.Id}}" class="btn btn-info w20" onclick="editUser(this.id)"> Editar </button>
                         </td>
                     </tr>
                 {{end}}

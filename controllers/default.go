@@ -84,6 +84,8 @@ func (c *MainController) Prepare() {
 	if app, ok := c.AppController.(NestPreparer); ok {
 		app.NestPrepare()
 	}
+
+	c.Data["Url"] = url
 }
 
 func (c *MainController) LoginPath() string {
