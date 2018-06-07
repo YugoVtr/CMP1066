@@ -26,3 +26,7 @@ function getXSRFData() {
         return null; 
     }
 }
+
+function redirect(url) {
+    location.href = url;
+}
