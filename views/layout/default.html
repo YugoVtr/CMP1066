@@ -5,9 +5,9 @@
     <!--<base target="_blank">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
     <!-- Default layout-->
+    {{assets_css "/static/css/fontawesome-all.min.css"}}
     
     <!-- Bootstrap v4.0.0 -->
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap.min.css"}}
@@ -25,14 +25,12 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="#"><i class="fas fa-gamepad text-warning"></i> &nbsp; CMP1066</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+            <div class="navbar-collapse collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-
-                        <li class="nav-item active">
-
-                        <a class="nav-link" href="{{urlfor "IndexController.Get"}}">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{urlfor "IndexController.Get"}}">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{urlfor "UserController.Get"}}">Usuários</a>
@@ -40,14 +38,12 @@
                 </ul>
                 {{if .Login}}
                 <form class="form-inline mt-2 mt-md-0" action="{{ "urlfor LoginController.Login" }}">
-                    <button class="btn btn-outline-success my-2 my-sm-0" 
-                        type="submit">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
                         Login
                     </button>
                 {{else}}
                 <form class="form-inline mt-2 mt-md-0" action="{{ urlfor "LoginController.Logout" }}">
-                    <button class="btn btn-outline-success my-2 my-sm-0" 
-                        type="submit"
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit"
                         title="{{.Userinfo.Nick}}">
                         Logout
                     </button>
@@ -57,6 +53,7 @@
         </nav>
     </head>
     {{ end }}
+
     <div class="container" style="padding-top: 54px;">
         {{.LayoutContent}}
     </div>
