@@ -1,0 +1,16 @@
+body {
+    margin: 0px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    background-color: #ffffff;
+    height: 100%;
+}
+
+div.content { 
+    margin: 4em auto;
+    position: relative;
+}
+
+div.flash { 
+    text-align: center; 
+}

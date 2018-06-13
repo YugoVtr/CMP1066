@@ -4,38 +4,31 @@ $( document ).ready(function() {
 	$("input[name=Nick],input[name=Password]").toggleClass("form-control");
 }); 
     
-function deleteUser(btn) {    
-	var id = $("#" + btn).closest("tr").attr("id");
+function deleteUser(id) {    
 	var _xsrf = getXSRFData(); 
 	$.ajax({
 		url: "/user?_xsrf=" + _xsrf + "&Id=" + id,
 		type: 'DELETE',
 		success: function (response) {
-			console.log(response)
-			alert(response ? "success" : "fail")
 			location.reload();
 		}
 	});
     return 0;
 }
 
-function activateUser(btn) {    
-	var id = $("#" + btn).closest("tr").attr("id");
+function activateUser(id) {    
 	var _xsrf = getXSRFData(); 
 	$.ajax({
 		url: "/user/activate?_xsrf=" + _xsrf + "&Id=" + id,
 		type: 'POST',
 		success: function (response) {
-			console.log(response)
-			alert(response ? "success" : "fail")
 			location.reload();
 		}
 	});
     return 0;
 }
 
-function editUser(btn) { 
-	var id = $("#" + btn).closest("tr").attr("id");
+function editUser(id) { 
 	location.href = "user?Id=" + id;
 }
 </script>

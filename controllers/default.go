@@ -70,9 +70,9 @@ func (c *MainController) Prepare() {
 	c.LayoutSections = make(map[string]string)
 
 	// CSS
-	file = "html_head" + url + ".html"
+	file = "styles" + url + ".html"
 	if _, err := os.Stat(base + file); err == nil {
-		c.LayoutSections["HtmlHead"] = file
+		c.LayoutSections["Styles"] = file
 	}
 
 	// JS

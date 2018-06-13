@@ -4,7 +4,8 @@ import (
 	"CMP1066/models"
 	."CMP1066/lib"		//Para fazer o hash da senha 
 	"html/template"
-	//"github.com/astaxie/beego"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/validation"
 )
 
 type UserController struct {
@@ -12,6 +13,8 @@ type UserController struct {
 }
 
 func (c *UserController) Get() {
+	beego.ReadFromRequest(&c.Controller)
+
 	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 	var users []*models.User
 	models.Users().All(&users)
@@ -28,55 +31,88 @@ func (c *UserController) Get() {
 }
 
 func (c *UserController) Post() {
-	c.Data["json"] = map[string]interface{}{"User": "Success"}
+	valid := validation.Validation{}
 	user := models.User{}
 	c.ParseForm(&user)
 
+	flash := beego.NewFlash()
+	var err error 
+
+	if b, erro := valid.Valid(&user) ; erro != nil || !b {
+		form := valid.Errors[0]
+		flash.Error(form.Key + " " + form.Message)
+		flash.Store(&c.Controller)
+		c.Redirect(c.URLFor("UserController.Get"), 302)
+		return
+	}
+
 	if user.Id != 0 {
 		user.Password = Crypto(user.Password)
-		user.Update()
-	} else if models.Users().Filter("Nick", user.Nick).Exist() {
-		c.Data["json"] = map[string]interface{}{"User": "Nick already exists"}
+		err = user.Update()
 	} else {
 		user.Status = true
 		user.Password = Crypto(user.Password)			
-		user.Insert()
+		err = user.Insert()
+	}
+
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.Redirect(c.URLFor("UserController.Get"), 302)
+		return
 	}
 	
-	c.SetLogin(&user)
-	c.Redirect(c.URLFor("IndexController.Get"), 303)
+	flash.Notice("Salvo com Sucesso")
+	flash.Store(&c.Controller)
+	c.Redirect(c.URLFor("UserController.Get"), 303)
 }
 
 func (c *UserController) Delete() {
+	flash := beego.NewFlash()
+
 	if id, erro := c.GetInt64("Id"); erro == nil {
 		user := models.User{}
 		user.Id = id
-		valid := user.Delete()
-	
-		c.Data["json"] = map[string]interface{}{"Success": valid }
-		c.ServeJSON()
+
+		if err := user.Delete(); err == nil {
+			flash.Warning("Usuário Inativo")
+			flash.Store(&c.Controller)
+		} else {
+			flash.Error(err.Error())
+			flash.Store(&c.Controller)
+		}
+
 	} else {
-		c.Data["json"] = map[string]interface{}{"Error": erro }
-		c.ServeJSON()
+		flash.Error(erro.Error())
+		flash.Store(&c.Controller)
 	}
 }
 
 func (c *UserController) Activate() {
 
+	flash := beego.NewFlash()
+
 	if id, erro := c.GetInt64("Id"); erro == nil {
 		user := models.User{}
 		user.Id = id
-		valid := user.Activate()
-	
-		c.Data["json"] = map[string]interface{}{"Success": valid }
-		c.ServeJSON()
+
+		if err := user.Activate(); err == nil {
+			flash.Notice("Usuário Ativo")
+			flash.Store(&c.Controller)
+		} else {
+			flash.Error(err.Error())
+			flash.Store(&c.Controller)
+		}
+
 	} else {
-		c.Data["json"] = map[string]interface{}{"Error": erro }
-		c.ServeJSON()
+		flash.Error(erro.Error())
+		flash.Store(&c.Controller)
 	}
+
 }
 
 func (c *UserController) Signup() {
+	beego.ReadFromRequest(&c.Controller)
 	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 	c.Data["Form"] = &models.User{Status: true}
 }

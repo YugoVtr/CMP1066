@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <!-- Default layout-->
+    {{assets_css "/static/css/custom.css"}}
     {{assets_css "/static/css/fontawesome-all.min.css"}}
     
     <!-- Bootstrap v4.0.0 -->
@@ -16,7 +17,7 @@
     {{assets_css "/static/css/bootstrap-select-v1.13.0-beta/bootstrap-select.min.css"}}
 
     <!-- Custom Layout-->
-    {{.HtmlHead}}
+    {{.Styles}}
 </head>
 <body>
 
@@ -54,7 +55,11 @@
     </head>
     {{ end }}
 
-    <div class="container" style="padding-top: 54px;">
+    
+    <div class="content">
+        <div class="flash">
+            {{ template "layout/flash.html" . }}
+        </div>
         {{.LayoutContent}}
     </div>
     

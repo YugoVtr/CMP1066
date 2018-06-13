@@ -1,0 +1,24 @@
+{{if .flash}}
+    {{if .flash.warning}}
+        <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span>
+                <strong>Warning:</strong> {{.flash.warning}}
+            </span>
+        </div>
+    {{else if .flash.error}}
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span>
+                <strong>Error:</strong> {{.flash.error}}
+            </span>
+        </div>
+    {{else if .flash.notice}}
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span>
+                <strong>Success:</strong> {{.flash.notice}}
+            </span>
+        </div>
+    {{end}}
+{{end}}

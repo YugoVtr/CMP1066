@@ -7,7 +7,7 @@ import (
 )
 
 func Authenticate(nick string, password string) (user *models.User, err error) {
-	msg := "invalid email or password."
+	msg := "invalid nick or password."
 	user = &models.User{Nick: nick, Status: true}
 
 	if err := user.Read("Nick","Status"); err != nil {
