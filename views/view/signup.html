@@ -10,7 +10,7 @@
 </div>
 <div class="row justify-content-md-center"> 
     <div class="col-sm-4 form-group">
-        <form id="user" action="signup" method="POST">
+        <form id="{{.Action}}" action="signup" method="POST">
             {{ .xsrfdata }}
             {{.Form | renderform}}
             
@@ -23,7 +23,7 @@
                 <i class="fa fa-edit"></i> Editar
             </button>
 
-            <button class="btn btn-secondary" onclick="location.href='{{ urlfor "UserController.Get" }}'" style="font-size:1.5em;">
+            <button type="button" class="btn btn-secondary" onclick="location.href='{{ urlfor "UserController.Get" }}'" style="font-size:1.5em;">
                 <i class="fa fa-user-plus"></i> Novo
             </button>
             {{end}}

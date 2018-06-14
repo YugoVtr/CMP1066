@@ -57,7 +57,7 @@ func (c *MainController) Prepare() {
 	c.Layout = "layout/default.html"
 
     //Custom layout
-	url := getControllerURL(c)
+	url := c.getControllerURL(); 
  
 	//Default VIEW
 	var file string = "view" + url + ".html"
@@ -125,7 +125,7 @@ func (name Controller) String() string {
 	return names[name]
 }
 
-func getControllerURL(c *MainController) string {
+func (c *MainController) getControllerURL() string {
 	url := c.Ctx.Input.URL()
 	r := regexp.MustCompile(`/[^/]*`)
     name := r.FindString(url)	

@@ -31,6 +31,10 @@ func (c *UserController) Get() {
 }
 
 func (c *UserController) Post() {
+
+	var redirect string 
+	redirect =  c.URLFor("UserController.Signup")
+
 	valid := validation.Validation{}
 	user := models.User{}
 	c.ParseForm(&user)
@@ -42,7 +46,7 @@ func (c *UserController) Post() {
 		form := valid.Errors[0]
 		flash.Error(form.Key + " " + form.Message)
 		flash.Store(&c.Controller)
-		c.Redirect(c.URLFor("UserController.Get"), 302)
+		c.Redirect(redirect, 302)
 		return
 	}
 
@@ -58,13 +62,13 @@ func (c *UserController) Post() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect(c.URLFor("UserController.Get"), 302)
+		c.Redirect(redirect, 302)
 		return
 	}
 	
 	flash.Notice("Salvo com Sucesso")
 	flash.Store(&c.Controller)
-	c.Redirect(c.URLFor("UserController.Get"), 303)
+	c.Redirect(redirect, 303)
 }
 
 func (c *UserController) Delete() {
@@ -115,4 +119,5 @@ func (c *UserController) Signup() {
 	beego.ReadFromRequest(&c.Controller)
 	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 	c.Data["Form"] = &models.User{Status: true}
+	c.Data["Action"] = c.getControllerURL(); 
 }
