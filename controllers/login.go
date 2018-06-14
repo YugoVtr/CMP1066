@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"github.com/astaxie/beego"
 	"CMP1066/lib"
+	"CMP1066/models"
 )
 
 type LoginController struct {
@@ -33,6 +34,10 @@ func (c *LoginController) Login() {
 			flash.Store(&c.Controller)
 			return
 		}
+
+		audit := models.Audit{}
+		audit.User = user
+		audit.Insert()
 	
 		flash.Store(&c.Controller)
 		c.SetLogin(user)

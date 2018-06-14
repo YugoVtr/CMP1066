@@ -19,15 +19,19 @@ func (c *UserController) Get() {
 	var users []*models.User
 	models.Users().All(&users)
 
+	var audits []*models.Audit
+	models.Audits().All(&audits)
+
 	var user models.User = models.User{}
 	if id, erro := c.GetInt64("Id"); erro == nil {
 		user.Id = id
 		user.Read("Id")
 		user.Password = ""
-	} 
+	} 	
 
-	c.Data["Form"] = &user
-	c.Data["Users"] = users
+	c.Data["Form"]   = &user
+	c.Data["Users"]  = users
+	c.Data["Audits"] = audits
 }
 
 func (c *UserController) Post() {
