@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>GOLANG</title>
-    <!--<base target="_blank">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <!-- Default layout-->
-    {{assets_css "/static/css/custom.css"}}
-    {{assets_css "/static/css/fontawesome-all.min.css"}}
     
     <!-- Bootstrap v4.0.0 -->
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap.min.css"}}
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap-grid.min.css"}}
     {{assets_css "/static/css/bootstrap-v4.0.0/bootstrap-reboot.min.css"}}
     {{assets_css "/static/css/bootstrap-select-v1.13.0-beta/bootstrap-select.min.css"}}
-
+    
+    <!-- Default layout-->
+    {{assets_css "/static/css/custom.css"}}
+    {{assets_css "/static/css/fontawesome-all.min.css"}}
+    
     <!-- Custom Layout-->
     {{.Styles}}
 </head>
@@ -55,11 +55,11 @@
     </head>
     {{ end }}
 
+    <div class="flash">
+        {{ template "layout/flash.html" . }}
+    </div>
     
     <div class="content">
-        <div class="flash">
-            {{ template "layout/flash.html" . }}
-        </div>
         {{.LayoutContent}}
     </div>
     
@@ -70,8 +70,8 @@
     {{assets_js "/static/js/bootstrap-v4.0.0/bootstrap.bundle.min.js"}}
     {{assets_js "/static/js/bootstrap-select-v1.13.0-beta/bootstrap-select.min.js"}}
     {{assets_js "/static/js/bootstrap-select-v1.13.0-beta/defaults-pt_BR.min.js"}}
-    {{assets_js "/static/js/geral.js"}}
     {{assets_js "/static/js/Chart.min.js"}}
+    {{assets_js "/static/js/geral.js"}}
 
     <!-- Custom Layout-->
     {{.Scripts}}

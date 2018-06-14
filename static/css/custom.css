@@ -11,6 +11,9 @@ div.content {
     position: relative;
 }
 
-div.flash { 
+div.flash {
     text-align: center; 
+    position: fixed;
+    z-index: 2;
+    width: 100%;
 }
