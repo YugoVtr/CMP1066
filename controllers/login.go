@@ -3,6 +3,7 @@ package controllers
 import (
 	"html/template"
 	"CMP1066/lib"
+	"CMP1066/models"
 )
 
 type LoginController struct {
@@ -33,6 +34,10 @@ func (c *LoginController) Login() {
 	if err != nil || user.Id < 1 {
 		return
 	}
+
+	audit := models.Audit{}
+	audit.User = user
+	audit.Insert()
 
 	c.SetLogin(user)
 
